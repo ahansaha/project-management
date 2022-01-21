@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace = "layouts :: pmaHeader"></head>
+
+<body>
+	
+	<nav th:replace = "layouts :: pmaNavbar"></nav>
+	
+	<div class="container">
+		<h4>Current Employees</h4>
+		<hr>
+		
+		<a th:href="@{/employees/new}" class="btn btn-primary btn-sm mb-3">New Employee</a>
+		
+		<table th:replace = "layouts :: pmaEmployeeTable"></table>
+	</div>
+	
+</body>
+
+</html>

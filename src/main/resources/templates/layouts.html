@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:fragment = "pmaHeader">
+
+	<!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" 
+    integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    
+    <link rel = "stylesheet" th:ref = "@{/css/formatting.css}">
+    
+    <!-- Chart.js -->
+    <script  src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+</head>
+
+<body>
+
+	<!-- Common navbar -->
+	<nav th:fragment = "pmaNavbar" class="navbar navbar-expand-lg navbar-dark bg-dark">
+	    <div class="container-fluid">
+	        <a class="navbar-brand" href="#">Project IO</a>
+	        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+	        <span class="navbar-toggler-icon"></span>
+	        </button>
+	        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+	            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+	                 <li class="nav-item">
+	                    <a class="nav-link" th:href="@{/}">Home</a>
+	                </li>
+	                <li class="nav-item">
+	                    <a class="nav-link" th:href="@{/projects}">Projects</a>
+	                </li>
+	                <li class="nav-item">
+	                    <a class="nav-link" th:href="@{/employees}">Employees</a>
+	                </li>
+	            </ul>
+	        </div>
+	    </div>
+	</nav>
+	
+	<!-- List of all projects in a table -->
+		
+	<table th:fragment = "pmaProjectTable" class="table table-bordered table-striped">
+		<thead class = "thead-dark">
+			<tr>
+				<th> Project name </th>
+				<th> Project stage</th>
+				<th> Project description </th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr th:each = "aProject : ${projects}">
+				<td th:text = "${aProject.name}"></td>
+				<td th:text = "${aProject.stage}"></td>
+				<td th:text = "${aProject.description}"></td>
+			</tr>
+		</tbody>
+	</table>
+	
+	
+	<!-- List of all employees in a table -->
+	
+	<table th:fragment = "pmaEmployeeTable" class="table table-bordered table-striped">
+		<thead class = "thead-dark">
+			<tr>
+				<th> Employee first name </th>
+				<th> Employee last name</th>
+				<th> Projects count </th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr th:each = "anEmployeeProjectCnt : ${employeesListProjectsCnt}">
+				<td th:text = "${anEmployeeProjectCnt.firstName}"></td>
+				<td th:text = "${anEmployeeProjectCnt.lastName}"></td>
+				<td th:text = "${anEmployeeProjectCnt.projectCount}"></td>
+			</tr>
+		</tbody>
+	</table>
+	
+</body>
+
+</html>
