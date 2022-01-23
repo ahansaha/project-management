@@ -44,9 +44,15 @@
 	    </div>
 	</nav>
 	
-	<!-- List of all projects in a table -->
-		
-	<table th:fragment = "pmaProjectTable" class="table table-bordered table-striped">
+	
+	
+	
+	<!-- List of all projects with the columns (Basically all cols except the ID col)
+			name
+			stage
+			description
+	 -->
+	<table th:fragment = "pmaProjectTableAll" class="table table-bordered table-striped">
 		<thead class = "thead-dark">
 			<tr>
 				<th> Project name </th>
@@ -64,9 +70,65 @@
 	</table>
 	
 	
-	<!-- List of all employees in a table -->
 	
-	<table th:fragment = "pmaEmployeeTable" class="table table-bordered table-striped">
+	
+	<!-- List of all employees with the columns (Basically all cols except the ID col)
+			first name
+			last name
+			email address
+	-->
+	<table th:fragment = "pmaEmployeeTableAll" class="table table-bordered table-striped">
+		<thead class = "thead-dark">
+			<tr>
+				<th> Employee first name </th>
+				<th> Employee last name</th>
+				<th> Projects count </th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr th:each = "anEmployee : ${employees}">
+				<td th:text = "${anEmployee.firstName}"></td>
+				<td th:text = "${anEmployee.lastName}"></td>
+				<td th:text = "${anEmployee.email}"></td>
+			</tr>
+		</tbody>
+	</table>
+	
+	
+	
+	
+	
+	<!-- List of all projects with the columns (This table we are displaying on home page)
+			name
+			stage
+	 -->
+	<table th:fragment = "pmaProjectTableHome" class="table table-bordered table-striped">
+		<thead class = "thead-dark">
+			<tr>
+				<th> Project name </th>
+				<th> Project stage</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr th:each = "aProject : ${projects}">
+				<td th:text = "${aProject.name}"></td>
+				<td th:text = "${aProject.stage}"></td>
+			</tr>
+		</tbody>
+	</table>
+	
+	
+	
+	
+	
+	<!-- List of all employees with the columns 
+		(This the table where employee table is left joined with employee_project
+		to get the project count for each employee.)
+			first name
+			last name
+			project count
+	-->
+	<table th:fragment = "pmaEmployeeTableProjectCount" class="table table-bordered table-striped">
 		<thead class = "thead-dark">
 			<tr>
 				<th> Employee first name </th>

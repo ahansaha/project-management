@@ -17,12 +17,17 @@
 		<div class="row">
 			
 			<div class="col-md-6">
-				<table th:replace = "layouts :: pmaProjectTable"></table>
+				<table th:replace = "layouts :: pmaProjectTableHome"></table>
 			</div>
 	
 	
 			<div class = "col-md-6">
 				<canvas id="myPieChart" height="50" width="50"></canvas>
+				
+				<script>
+					var chartData = "[[${projectStatusCnt}]]"
+				</script>
+				
 			</div>
 			
 		</div>
@@ -31,7 +36,7 @@
 		<h4>Current Employees</h4>
 		<div class="row">
 			<div class="col-md-6">
-				<table th:replace = "layouts :: pmaEmployeeTable"></table>
+				<table th:replace = "layouts :: pmaEmployeeTableProjectCount"></table>
 			</div>
 		</div>
 		
