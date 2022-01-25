@@ -3,6 +3,7 @@ package com.Souvik.pma.controllers;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,6 +20,9 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 @Controller
 public class HomeController {
 	
+	@Value("${version}")
+	private String ver;
+	
 	@Autowired
 	IProjectRepository projectRepository;
 	
@@ -27,6 +31,8 @@ public class HomeController {
 	
 	@GetMapping("/")
 	public String displayHome(Model model) throws JsonProcessingException {
+		
+		model.addAttribute("versionNumber", ver);
 		
 		List<Project> projects = projectRepository.findAll();
 		model.addAttribute("projects", projects);
