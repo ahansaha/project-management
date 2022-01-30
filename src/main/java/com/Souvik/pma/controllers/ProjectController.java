@@ -10,24 +10,24 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.Souvik.pma.dao.IEmployeeRepository;
-import com.Souvik.pma.dao.IProjectRepository;
 import com.Souvik.pma.entities.Employee;
 import com.Souvik.pma.entities.Project;
+import com.Souvik.pma.services.EmployeeService;
+import com.Souvik.pma.services.ProjectService;
 
 @Controller
 @RequestMapping("/projects")
 public class ProjectController {
 	
 	@Autowired
-	IProjectRepository projectRepository;
+	ProjectService projectService;
 	
 	@Autowired
-	IEmployeeRepository employeeRepository;
+	EmployeeService employeeService;
 	
 	@GetMapping
 	public String displayProjects(Model model) {
-		List<Project> projects = projectRepository.findAll();
+		List<Project> projects = projectService.getAll();
 		model.addAttribute("projects", projects);
 		return "projects/project-list";
 	}
@@ -38,7 +38,7 @@ public class ProjectController {
 		Project aProject = new Project();
 		model.addAttribute("project", aProject);
 		
-		List<Employee> employees = employeeRepository.findAll();
+		List<Employee> employees = employeeService.getAll();
 		model.addAttribute("allEmployees", employees);
 		
 		return "projects/new-project";
@@ -48,7 +48,7 @@ public class ProjectController {
 	public String createProject(Project project, @RequestParam List<Long> employees) { //Here employees in the arguments
 																					   //are the list of the employeeIds
 		//This method should save project to DB.
-		projectRepository.save(project);
+		projectService.save(project);
 		
 		
 		//Code for one to many. One project can have multiple employees.

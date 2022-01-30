@@ -8,12 +8,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
-import com.Souvik.pma.dao.IEmployeeRepository;
-import com.Souvik.pma.dao.IProjectRepository;
 import com.Souvik.pma.dto.IChartData;
 import com.Souvik.pma.dto.IEmployeeProject;
-import com.Souvik.pma.entities.Employee;
 import com.Souvik.pma.entities.Project;
+import com.Souvik.pma.services.EmployeeService;
+import com.Souvik.pma.services.ProjectService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -24,20 +23,20 @@ public class HomeController {
 	private String ver;
 	
 	@Autowired
-	IProjectRepository projectRepository;
+	ProjectService projectService;
 	
 	@Autowired
-	IEmployeeRepository employeeRepository;
+	EmployeeService employeeService;
 	
 	@GetMapping("/")
 	public String displayHome(Model model) throws JsonProcessingException {
 		
 		model.addAttribute("versionNumber", ver);
 		
-		List<Project> projects = projectRepository.findAll();
+		List<Project> projects = projectService.getAll();
 		model.addAttribute("projects", projects);
 		
-		List<IChartData> projectData = projectRepository.getProjectStatus();
+		List<IChartData> projectData = projectService.getProjectStatus();
 		
 		//Converting the projectData object to json for use in javaScript pie chart.
 		ObjectMapper objectMapper = new ObjectMapper();
@@ -47,7 +46,7 @@ public class HomeController {
 		
 		model.addAttribute("projectStatusCnt", projectDatajsonString);
 		
-		List<IEmployeeProject> employeesProjectsCnt = employeeRepository.employeeProjects();
+		List<IEmployeeProject> employeesProjectsCnt = employeeService.employeeProjects();
 		model.addAttribute("employeesListProjectsCnt", employeesProjectsCnt);
 		
 		return "main/home";
