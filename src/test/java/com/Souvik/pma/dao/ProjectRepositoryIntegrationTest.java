@@ -13,9 +13,8 @@ import org.springframework.test.context.jdbc.Sql.ExecutionPhase;
 import org.springframework.test.context.jdbc.SqlGroup;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import com.Souvik.pma.ProjectManagementApplication;
-import com.Souvik.pma.dao.IEmployeeRepository;
-import com.Souvik.pma.dao.IProjectRepository;
 import com.Souvik.pma.entities.Project;
+
 
 
 @SpringBootTest
