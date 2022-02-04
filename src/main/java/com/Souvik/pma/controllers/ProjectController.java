@@ -60,7 +60,7 @@ public class ProjectController {
 //		}
 		
 		//Use a redirect here to prevent the user from submitting the data multiple times to prevent duplicates.
-		return "redirect:/projects/new";
+		return "redirect:/projects";
 	}
 	
 }

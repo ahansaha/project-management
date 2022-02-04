@@ -9,10 +9,11 @@
 	<nav th:replace = "layouts :: pmaNavbar"></nav>
 	
 	<div class="container">
-		<form action="/employees/save" method="POST" th:object = "${employee}">
+		<form th:action="@{/employees/save}" method="POST" th:object = "${employee}">
 		<input type="text" placeholder="Employee first name" th:field = ${employee.firstName}>
 		<input type="text" placeholder="Employee last name" th:field = ${employee.lastName}>
 		<input type="text" placeholder="Employee email address" th:field = ${employee.email}>
+		<!-- <input type="hidden" name="_csrf" th:value="${_csrf.token}" /> -->
 		<button type="submit">Create Employee</button>
 		</form>
 	</div>
