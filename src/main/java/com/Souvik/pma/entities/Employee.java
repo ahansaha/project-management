@@ -20,6 +20,7 @@ import javax.validation.constraints.Size;
 import org.springframework.boot.convert.DataSizeUnit;
 import org.springframework.lang.NonNull;
 
+import com.Souvik.pma.markerInterfaces.IMarkerOnCreate;
 import com.Souvik.pma.validators.UniqueValue;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -41,7 +42,7 @@ public class Employee {
 	
 	@NonNull //NonNull, Size, Email is a client side validation i.e when filling forms or sending the json body request.
 	@Email
-	@UniqueValue
+	@UniqueValue(groups = IMarkerOnCreate.class)
 	private String email;
 	
 	@ManyToMany(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH},

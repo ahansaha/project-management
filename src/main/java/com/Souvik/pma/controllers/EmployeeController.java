@@ -13,7 +13,7 @@ import com.Souvik.pma.entities.Employee;
 import com.Souvik.pma.services.EmployeeService;
 
 @Controller
-@RequestMapping("/employees")
+@RequestMapping("/employeesssssss")
 public class EmployeeController {
 	
 	@Autowired

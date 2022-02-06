@@ -43,6 +43,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 			.antMatchers("/", "/**").permitAll()
 			.and()
 			.csrf().ignoringAntMatchers("/app-api/employees/**").ignoringAntMatchers("/app-api/projects/**")
+				   .ignoringAntMatchers("/spring-rest-projects/**").ignoringAntMatchers("/spring-rest-employees/**")
 			.and()
 			.formLogin();
 	}

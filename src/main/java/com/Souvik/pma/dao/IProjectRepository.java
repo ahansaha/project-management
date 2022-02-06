@@ -3,12 +3,14 @@ package com.Souvik.pma.dao;
 import java.util.List;
 
 import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.repository.PagingAndSortingRepository;
+import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 
 import com.Souvik.pma.dto.IChartData;
 import com.Souvik.pma.entities.Project;
 
-public interface IProjectRepository extends CrudRepository<Project, Long> {
+@RepositoryRestResource(collectionResourceRel = "spring-rest-projects", path = "spring-rest-projects")
+public interface IProjectRepository extends PagingAndSortingRepository<Project, Long> {
 	
 	@Override
 	public List<Project> findAll();
