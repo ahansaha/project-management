@@ -2,13 +2,17 @@ package com.Souvik.pma.controllers;
 
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import com.Souvik.pma.entities.Employee;
 import com.Souvik.pma.entities.Project;
@@ -17,7 +21,7 @@ import com.Souvik.pma.services.ProjectService;
 
 @Controller
 @RequestMapping("/projects")
-public class ProjectController {
+public class ProjectController{
 	
 	@Autowired
 	ProjectService projectService;
@@ -45,8 +49,8 @@ public class ProjectController {
 	}
 	
 	@PostMapping("/save")
-	public String createProject(Project project, @RequestParam List<Long> employees) { //Here employees in the arguments
-																					   //are the list of the employeeIds
+	public String createProject(@Valid Project project) {
+		
 		//This method should save project to DB.
 		projectService.save(project);
 		

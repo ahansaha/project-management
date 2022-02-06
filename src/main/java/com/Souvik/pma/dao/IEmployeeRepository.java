@@ -13,6 +13,8 @@ public interface IEmployeeRepository extends CrudRepository<Employee, Long> {
 	@Override
 	public List<Employee> findAll();
 	
+	public Employee findByEmail(String email);
+	
 	@Query(nativeQuery = true, value = "select e.FIRST_NAME as firstName, e.LAST_NAME as lastName, count(pe.EMPLOYEE_ID) as projectCount from EMPLOYEE e left join PROJECT_EMPLOYEE pe on e.EMPLOYEE_ID = pe.EMPLOYEE_ID group by e.FIRST_NAME, e.LAST_NAME order by projectCount desc")
 	public List<IEmployeeProject> employeeProjects();
 }

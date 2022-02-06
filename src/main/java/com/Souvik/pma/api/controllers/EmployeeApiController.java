@@ -2,6 +2,8 @@ package com.Souvik.pma.api.controllers;
 
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpStatus;
@@ -38,19 +40,19 @@ public class EmployeeApiController {
 	
 	@PostMapping(consumes = "application/json")
 	@ResponseStatus(HttpStatus.CREATED)
-	public Employee createEmployee(@RequestBody Employee employee) {
+	public Employee createEmployee(@RequestBody @Valid Employee employee) {
 		return employeeRepository.save(employee);
 	}
 	
 	@PutMapping(consumes = "application/json")
 	@ResponseStatus(HttpStatus.OK)
-	public Employee update(@RequestBody Employee employee) {
+	public Employee update(@RequestBody @Valid Employee employee) {
 		return employeeRepository.save(employee);
 	}
 
 	@PatchMapping(path = "/{id}", consumes = "application/json")
 	@ResponseStatus(HttpStatus.OK)
-	public Employee partialUpdate(@PathVariable("id") long id, @RequestBody Employee patchEmployee) {
+	public Employee partialUpdate(@PathVariable("id") long id, @RequestBody @Valid Employee patchEmployee) {
 		Employee emp = employeeRepository.findById(id).get();
 		
 		if(patchEmployee.getEmail() != null) {

@@ -3,6 +3,7 @@ package com.Souvik.pma.entities;
 import java.util.List;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -13,7 +14,13 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.Size;
 
+import org.springframework.boot.convert.DataSizeUnit;
+import org.springframework.lang.NonNull;
+
+import com.Souvik.pma.validators.UniqueValue;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
@@ -24,10 +31,17 @@ public class Employee {
 	@SequenceGenerator(name = "employee_seq", sequenceName = "employee_seq", allocationSize = 1, initialValue = 1)
 	private long employeeId;
 	
+	@NonNull
+	@Size(min = 2, max = 50)
 	private String firstName;
 	
+	@NonNull
+	@Size(min = 1, max = 50)
 	private String lastName;
 	
+	@NonNull //NonNull, Size, Email is a client side validation i.e when filling forms or sending the json body request.
+	@Email
+	@UniqueValue
 	private String email;
 	
 	@ManyToMany(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH},

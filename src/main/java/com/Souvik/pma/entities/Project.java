@@ -14,6 +14,10 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Size;
+
+import org.springframework.lang.NonNull;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -25,10 +29,15 @@ public class Project {
 	@SequenceGenerator(name = "project_seq", sequenceName = "project_seq", allocationSize = 1, initialValue = 1)
 	private long projectId;
 	
+	@NonNull
+	@Size(min = 5, max = 50)
 	private String name;
 	
+	@NonNull
 	private String stage; //Not started, Completed, In progress
 	
+	@NonNull
+	@Size(min = 20, max = 250)
 	private String description;
 	
 	@ManyToMany(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH},
@@ -37,6 +46,7 @@ public class Project {
 			   joinColumns = @JoinColumn(name = "project_id"),
 			   inverseJoinColumns = @JoinColumn(name = "employee_id"))
 	@JsonIgnore
+	@NotEmpty
 	private List<Employee> employees;  //One project can have multiple employees
 	
 	public Project() {

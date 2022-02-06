@@ -2,6 +2,8 @@ package com.Souvik.pma.api.controllers;
 
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpStatus;
@@ -40,19 +42,19 @@ public class ProjectApiController {
 	
 	@PostMapping(consumes = "application/json")
 	@ResponseStatus(HttpStatus.CREATED)
-	public Project createProject(@RequestBody Project project) {
+	public Project createProject(@RequestBody @Valid Project project) {
 		return projectRepository.save(project);
 	}
 	
 	@PutMapping(consumes = "application/json")
 	@ResponseStatus(HttpStatus.OK)
-	public Project updateProject(@RequestBody Project updatedProject) {
+	public Project updateProject(@RequestBody @Valid Project updatedProject) {
 		return projectRepository.save(updatedProject);
 	}
 	
 	@PatchMapping(path = "/{id}", consumes = "application/json")
 	@ResponseStatus(HttpStatus.OK)
-	public Project patchProject(@PathVariable("id") long id, @RequestBody Project patchedProject) {
+	public Project patchProject(@PathVariable("id") long id, @RequestBody @Valid Project patchedProject) {
 		
 		Project prj = projectRepository.findById(id).get();
 		
