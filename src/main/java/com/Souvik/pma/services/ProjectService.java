@@ -26,4 +26,12 @@ public class ProjectService {
 	public List<IChartData> getProjectStatus() {
 		return projectRepository.getProjectStatus();
 	}
+	
+	public Project getProjectById(long id) {
+		return projectRepository.findById(id).get();
+	}
+	
+	public void deleteProject(Project project) {
+		projectRepository.delete(project);
+	}
 }

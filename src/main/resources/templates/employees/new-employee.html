@@ -10,11 +10,23 @@
 	
 	<div class="container">
 		<form th:action="@{/employees/save}" method="POST" th:object = "${employee}">
-		<input type="text" placeholder="Employee first name" th:field = ${employee.firstName}>
-		<input type="text" placeholder="Employee last name" th:field = ${employee.lastName}>
-		<input type="text" placeholder="Employee email address" th:field = ${employee.email}>
-		<!-- <input type="hidden" name="_csrf" th:value="${_csrf.token}" /> -->
-		<button type="submit">Create Employee</button>
+			
+			<!-- This will be used to bind to the employee that was clicked on (USED FOR UPDATING EMPLOYEE)-->
+			<input type="hidden" th:field="${employee.employeeId}">
+			
+			<!-- This will make sure that the updated employee is not deleted in the employee_project table -->
+			<input type="hidden" th:field="${employee.projects}">
+			
+			<input type="text" placeholder="Employee first name" th:field = ${employee.firstName}>
+			
+			<input type="text" placeholder="Employee last name" th:field = ${employee.lastName}>
+			
+			<input type="text" placeholder="Employee email address" th:field = ${employee.email}>
+			
+			<!-- <input type="hidden" name="_csrf" th:value="${_csrf.token}" /> -->
+			
+			<button type="submit">Create Employee</button>
+			
 		</form>
 	</div>
 	

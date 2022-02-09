@@ -51,7 +51,7 @@ public class Employee {
 			   joinColumns = @JoinColumn(name = "employee_id"),
 			   inverseJoinColumns = @JoinColumn(name = "project_id"))
 	@JsonIgnore
-	private List<Project> projects;    //Many employees can be assigned to one project.
+	private List<Project> projects;    //Many employees can be assigned to many projects.
 
 	public Employee() {
 		

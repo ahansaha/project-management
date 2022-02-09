@@ -50,21 +50,49 @@ public class ProjectController{
 	
 	@PostMapping("/save")
 	public String createProject(@Valid Project project) {
-		
-		//This method should save project to DB.
 		projectService.save(project);
-		
-		
-		//Code for one to many. One project can have multiple employees.
-//		Iterable<Employee> chosenEmployees = employeeRepository.findAllById(employees);
-//		
-//		for(Employee emp : chosenEmployees) {
-//			emp.setProject(project);
-//			employeeRepository.save(emp);
-//		}
 		
 		//Use a redirect here to prevent the user from submitting the data multiple times to prevent duplicates.
 		return "redirect:/projects";
 	}
+	
+	@GetMapping("update")
+	public String updateProject(@RequestParam("id") long id, Model model) {
+		
+		Project project = projectService.getProjectById(id);
+		model.addAttribute("project", project);
+		
+		List<Employee> employees = employeeService.getAll();
+		model.addAttribute("allEmployees", employees);
+		
+		return "projects/new-project";
+	}
+	
+	@GetMapping("delete")
+	public String deleteProject(@RequestParam("id") long id) {
+		projectService.deleteProject(projectService.getProjectById(id));
+		return "redirect:/projects";
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 }

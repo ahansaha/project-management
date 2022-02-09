@@ -47,12 +47,12 @@
 	
 	
 	
-	<!-- List of all projects with the columns (Basically all cols except the ID col)
+	<!-- List of all projects with the columns (Basically all cols except the ID col) ONLY VIEW ALL PROJECTS. NO DELETE OR UPDATE.
 			name
 			stage
 			description
 	 -->
-	<table th:fragment = "pmaProjectTableAll" class="table table-bordered table-striped">
+	<table th:fragment = "pmaProjectTableAllView" class="table table-bordered table-striped">
 		<thead class = "thead-dark">
 			<tr>
 				<th> Project name </th>
@@ -69,15 +69,43 @@
 		</tbody>
 	</table>
 	
+	<!-- List of all projects with the columns (Basically all cols except the ID col) UPDATE AND DELETE AS WELL.
+			name
+			stage
+			description
+	 -->
+	<table th:fragment = "pmaProjectTableAllEdit" class="table table-bordered table-striped">
+		<thead class = "thead-dark">
+			<tr>
+				<th class="col-md-auto"> Project name </th>
+				<th class="col-md-auto"> Project stage</th>
+				<th class="col-md-auto"> Project description </th>
+				<th class="col-2"> Action </th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr th:each = "aProject : ${projects}">
+				<td th:text = "${aProject.name}"></td>
+				<td th:text = "${aProject.stage}"></td>
+				<td th:text = "${aProject.description}"></td>
+				<td>
+					<a th:href="@{/projects/update(id=${aProject.projectId})}" class="btn btn-info btn-sm">Update</a>
+					<a th:href="@{/projects/delete(id=${aProject.projectId})}" class="btn btn-danger btn-sm" 
+					   onclick="if (!(confirm('Are you sure you want to delete this project ?'))) return false">Delete</a>
+				</td>
+			</tr>
+		</tbody>
+	</table>
 	
 	
 	
-	<!-- List of all employees with the columns (Basically all cols except the ID col)
+	
+	<!-- List of all employees with the columns (Basically all cols except the ID col) ONLY VIEW ALL EMPLOYEES. NO DELETE OR UPDATE.
 			first name
 			last name
 			email address
 	-->
-	<table th:fragment = "pmaEmployeeTableAll" class="table table-bordered table-striped">
+	<table th:fragment = "pmaEmployeeTableAllView" class="table table-bordered table-striped">
 		<thead class = "thead-dark">
 			<tr>
 				<th> Employee first name </th>
@@ -90,6 +118,34 @@
 				<td th:text = "${anEmployee.firstName}"></td>
 				<td th:text = "${anEmployee.lastName}"></td>
 				<td th:text = "${anEmployee.email}"></td>
+			</tr>
+		</tbody>
+	</table>
+	
+	<!-- List of all employees with the columns (Basically all cols except the ID col) UPDATE AND DELETE AS WELL.
+			first name
+			last name
+			email address
+	-->
+	<table th:fragment = "pmaEmployeeTableAllEdit" class="table table-bordered table-striped">
+		<thead class = "thead-dark">
+			<tr>
+				<th> Employee first name </th>
+				<th> Employee last name </th>
+				<th> Projects count </th>
+				<th> Action </th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr th:each = "anEmployee : ${employees}">
+				<td th:text = "${anEmployee.firstName}"></td>
+				<td th:text = "${anEmployee.lastName}"></td>
+				<td th:text = "${anEmployee.email}"></td>
+				<td>
+					<a th:href="@{/employees/update(id=${anEmployee.employeeId})}" class="btn btn-info btn-sm">Update</a>
+					<a th:href="@{/employees/delete(id=${anEmployee.employeeId})}" class="btn btn-danger btn-sm" 
+					   onclick="if (!(confirm('Are you sure you want to delete this employee ?'))) return false">Delete</a>
+				</td>
 			</tr>
 		</tbody>
 	</table>

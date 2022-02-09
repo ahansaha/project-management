@@ -26,4 +26,12 @@ public class EmployeeService {
 	public List<IEmployeeProject> employeeProjects() {
 		return employeeRepository.employeeProjects();
 	}
+	
+	public Employee getEmployeeById(long id) {
+		return employeeRepository.findById(id).get();
+	}
+	
+	public void deleteEmployee(Employee employee) {
+		employeeRepository.delete(employee);
+	}
 }

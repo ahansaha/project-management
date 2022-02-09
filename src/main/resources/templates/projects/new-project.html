@@ -11,6 +11,9 @@
 	<div class="container">
 		<form th:action="@{/projects/save}" method="POST" th:object = "${project}">
 		
+			<!-- This will be used to bind to the project that was clicked on (USED FOR UPDATING PROJECT)-->
+			<input type="hidden" th:field="${project.projectId}">
+		
 			<input type="text" placeholder="Project Name" th:field = ${project.name}>
 			<!-- <span th:if="${#fields.hasErrors('name')}" th:errors="${project.name}">Name error</span> -->
 			
