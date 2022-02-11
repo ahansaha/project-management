@@ -7,6 +7,8 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.Errors;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -21,14 +23,10 @@ import com.Souvik.pma.services.EmployeeService;
 
 @Controller
 @RequestMapping("/employees")
-//@Validated
 public class EmployeeController {
 	
 	@Autowired
 	EmployeeService employeeService;
-	
-//	@Autowired
-//	IEmployeeRepository employeeRepository;
 	
 	@GetMapping
 	public String displayEmployees(Model model) {
@@ -45,7 +43,10 @@ public class EmployeeController {
 	}
 	
 	@PostMapping("/save")
-	public String createEmployee(Employee employee) {
+	public String createEmployee(@Valid Employee employee, BindingResult result, Model model) {
+		if(result.hasErrors()) {
+			return "employees/employee-creation-error";
+		}
 		employeeService.save(employee);
 		return "redirect:/employees";
 	}

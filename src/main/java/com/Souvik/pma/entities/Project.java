@@ -14,7 +14,9 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import org.springframework.lang.NonNull;
@@ -29,15 +31,15 @@ public class Project {
 	@SequenceGenerator(name = "project_seq", sequenceName = "project_seq", allocationSize = 1, initialValue = 1)
 	private long projectId;
 	
-	@NonNull
-	@Size(min = 5, max = 50)
+	@NotBlank(message = "Must give a project name")
+	@Size(min = 5, max = 50, message = "Project name must lie between 5 to 50 characters")
 	private String name;
 	
-	@NonNull
+	@NotNull
 	private String stage; //Not started, Completed, In progress
 	
-	@NonNull
-	@Size(min = 20, max = 250)
+	@NotBlank(message = "Must give the description of the project")
+	@Size(min = 20, max = 250, message = "Project description must lie between 20 to 250 characters")
 	private String description;
 	
 	@ManyToMany(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH},
@@ -46,7 +48,7 @@ public class Project {
 			   joinColumns = @JoinColumn(name = "project_id"),
 			   inverseJoinColumns = @JoinColumn(name = "employee_id"))
 	@JsonIgnore
-	@NotEmpty
+	@NotEmpty(message = "Must assign at least one employee to a project")
 	private List<Employee> employees;  //One project can have multiple employees
 	
 	public Project() {

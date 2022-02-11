@@ -10,6 +10,8 @@
 	
 	<div class="container">
 		<form th:action="@{/employees/save}" method="POST" th:object = "${employee}">
+		
+			<br>
 			
 			<!-- This will be used to bind to the employee that was clicked on (USED FOR UPDATING EMPLOYEE)-->
 			<input type="hidden" th:field="${employee.employeeId}">
@@ -17,18 +19,34 @@
 			<!-- This will make sure that the updated employee is not deleted in the employee_project table -->
 			<input type="hidden" th:field="${employee.projects}">
 			
-			<input type="text" placeholder="Employee first name" th:field = ${employee.firstName}>
+			<div class="form-group row">
+				<label for="inputEmployeeFirstName" class="col-form-label">Employee First Name</label>
+				<input type="text" placeholder="Employee first name" th:field = ${employee.firstName}
+				id="inputEmployeeFirstName" class="form-control">
+			</div>							
 			
-			<input type="text" placeholder="Employee last name" th:field = ${employee.lastName}>
+			<div class="form-group row">
+				<label for="inputEmployeeLastName" class="col-form-label">Employee Last Name</label>
+				<input type="text" placeholder="Employee last name" th:field = ${employee.lastName}
+				id="inputEmployeeLastName" class="form-control">
+			</div>
 			
-			<input type="text" placeholder="Employee email address" th:field = ${employee.email}>
+			<div class="form-group row">
+				<label for="inputEmployeeEmail" class="col-form-label">Employee Email</label>
+				<input type="text" placeholder="Employee email address" th:field = ${employee.email}
+				id="inputEmployeeEmail" class="form-control">
+			</div>
 			
 			<!-- <input type="hidden" name="_csrf" th:value="${_csrf.token}" /> -->
 			
-			<button type="submit">Create Employee</button>
+			<div class="form-group row">
+				<button class="btn btn-success" type="submit">Create Employee</button>
+			</div>
 			
 		</form>
 	</div>
+	
+	<!-- <footer th:replace = "layouts :: pmaFooter"></footer> -->
 	
 </body>
 

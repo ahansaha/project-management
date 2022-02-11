@@ -8,11 +8,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.Souvik.pma.entities.Employee;
 import com.Souvik.pma.entities.Project;
@@ -45,14 +47,22 @@ public class ProjectController{
 		List<Employee> employees = employeeService.getAll();
 		model.addAttribute("allEmployees", employees);
 		
+		Errors errors;
+		if(model.containsAttribute("errors")) {
+			errors = (Errors) model.getAttribute("errors");
+		}
+		
 		return "projects/new-project";
 	}
 	
 	@PostMapping("/save")
-	public String createProject(@Valid Project project) {
-		projectService.save(project);
+	public String createProject(@Valid Project project, BindingResult result, Model model) {
 		
-		//Use a redirect here to prevent the user from submitting the data multiple times to prevent duplicates.
+		if(result.hasErrors()) {
+			return "projects/project-creation-error";
+		}
+		
+		projectService.save(project);
 		return "redirect:/projects";
 	}
 	

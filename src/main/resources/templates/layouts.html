@@ -12,7 +12,8 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" 
     integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     
-    <link rel = "stylesheet" th:ref = "@{/css/formatting.css}">
+    <link rel = "stylesheet" type="text/css" media="all" 
+    href="/css/formatting.css" th:href = "@{/css/formatting.css}" />
     
     <!-- Chart.js -->
     <script  src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -200,6 +201,15 @@
 			</tr>
 		</tbody>
 	</table>
+	
+	<!-- Common footer -->
+	<footer th:fragment="pmaFooter" class="bg-dark text-center text-lg-start">
+	  <!-- Copyright -->
+	  <div class="text-center p-3">
+	    <span style="color:white;">© 2022 Copyright: Souvik</span>
+	  </div>
+	  <!-- Copyright -->
+	</footer>
 	
 </body>
 

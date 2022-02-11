@@ -15,9 +15,10 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
-import org.springframework.boot.convert.DataSizeUnit;
 import org.springframework.lang.NonNull;
 
 import com.Souvik.pma.markerInterfaces.IMarkerOnCreate;
@@ -32,16 +33,17 @@ public class Employee {
 	@SequenceGenerator(name = "employee_seq", sequenceName = "employee_seq", allocationSize = 1, initialValue = 1)
 	private long employeeId;
 	
-	@NonNull
-	@Size(min = 2, max = 50)
+	@NotBlank(message = "Must enter the employee's first name")
+	@Size(min = 2, max = 50, message = "Employee first name must lie between 2 to 50 characters")
 	private String firstName;
 	
-	@NonNull
-	@Size(min = 1, max = 50)
+	@NotBlank(message = "Must enter the employee's last name")
+	@Size(min = 1, max = 50, message = "Employee last name must lie between 1 to 50 characters")
 	private String lastName;
 	
-	@NonNull //NonNull, Size, Email is a client side validation i.e when filling forms or sending the json body request.
-	@Email
+	//NotNull, Size, Email is a client side validation i.e when filling forms or sending the json body request.
+	@NotBlank(message = "Email cannot be empty")
+	@Email(message = "Must be a valid email address")
 	@UniqueValue(groups = IMarkerOnCreate.class)
 	private String email;
 	

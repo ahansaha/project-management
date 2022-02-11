@@ -11,31 +11,55 @@
 	<div class="container">
 		<form th:action="@{/projects/save}" method="POST" th:object = "${project}">
 		
+			<br>
+			
 			<!-- This will be used to bind to the project that was clicked on (USED FOR UPDATING PROJECT)-->
 			<input type="hidden" th:field="${project.projectId}">
 		
-			<input type="text" placeholder="Project Name" th:field = ${project.name}>
-			<!-- <span th:if="${#fields.hasErrors('name')}" th:errors="${project.name}">Name error</span> -->
 			
-			<select th:field = ${project.stage}>
-				<option th:value="NOTSTARTED"> Not Started</option>
-				<option th:value="INPROGRESS"> In Progress</option>
-				<option th:value="COMPLETED"> Completed</option>
-			</select>
+			<div class="form-group row">
+				<label for="inputProject" class="col-form-label">Project Name</label>
+				<input type="text" placeholder="Enter Project Name" th:field = ${project.name}
+				id="inputProject" class="form-control">
+				<span th:if="${#fields.hasErrors('name')}"
+					  th:errors="${project.name}"></span>
+			</div>
 			
-			<textarea type="text" placeholder="Enter Project Description" th:field = ${project.description}></textarea>
+			<div class="form-group row">
+				<label for="inputProjectStage" class="col-form-label">Project Stage</label>
+				<select th:field = ${project.stage} id="inputProjectStage" class="form-control">
+					<option th:value="NOTSTARTED"> Not Started</option>
+					<option th:value="INPROGRESS"> In Progress</option>
+					<option th:value="COMPLETED"> Completed</option>
+				</select>
+			</div>
 			
-			<select th:field = "*{employees}" multiple="multiple">
-				<option th:each = "employee : ${allEmployees}"
-						th:value = "${employee.employeeId}"
-						th:text = "${employee.firstName}">
-				</option>
-			</select>
+			<div class="form-group row">
+				<label class="col-form-label">Project Description</label>
+				<textarea type="text" placeholder="Enter Project Description" 
+				th:field = ${project.description} class="form-control"></textarea>
+			</div>
+			
+			<div class="form-group row">
+				<label for="inputProjectEmp" class="col-form-label">Assign employees</label>
+				<select th:field = "*{employees}" multiple="multiple" id="inputProjectEmp" class="form-control">
+					<option th:each = "employee : ${allEmployees}"
+							th:value = "${employee.employeeId}"
+							th:text = "${employee.firstName}">
+					</option>
+				</select>
+			</div>
+			
 			<!-- <input type="hidden" name="_csrf" th:value="${_csrf.token}" /> -->
-			<button type="submit">Create Project</button>
+			
+			<div class="form-group row">
+				<button class="btn btn-success" type="submit">Enter Project</button>
+			</div>
 			
 		</form>
 	</div>
+	
+	<!-- <footer th:replace = "layouts :: pmaFooter"></footer> -->
 	
 </body>
 

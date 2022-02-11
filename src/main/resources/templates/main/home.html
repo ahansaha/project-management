@@ -10,6 +10,7 @@
 	
 	<div class="container">
 	
+		<br>
 		<h3>Main Dashboard</h3>
 		<a th:text = "${versionNumber}"></a>
 		<hr>
@@ -22,8 +23,8 @@
 			</div>
 	
 	
-			<div class = "col-md-6">
-				<canvas id="myPieChart" height="50" width="50"></canvas>
+			<div class = "col-md-4">
+				<canvas id="myPieChart" height="30" width="30"></canvas>
 				
 				<script>
 					var chartData = "[[${projectStatusCnt}]]"
@@ -40,9 +41,11 @@
 				<table th:replace = "layouts :: pmaEmployeeTableProjectCount"></table>
 			</div>
 		</div>
+		<br>
 		
 	</div>
 	
+	<!-- <footer th:replace = "layouts :: pmaFooter"></footer> -->
 	
 	<script type="text/javascript" th:src="@{/js/myChart.js}"></script>
 	
