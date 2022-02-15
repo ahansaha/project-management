@@ -44,9 +44,29 @@ public class EmployeeController {
 	
 	@PostMapping("/save")
 	public String createEmployee(@Valid Employee employee, BindingResult result, Model model) {
-		if(result.hasErrors()) {
+		
+		//When creating a new employee
+		if(employee.getEmployeeId() == 0 && !result.hasErrors() ) {
+			//Check if entered email already exists in DB.
+			Employee employeeFromRepo = employeeService.getEmployeeByEmail(employee.getEmail());
+			if(employeeFromRepo != null && employeeFromRepo.getEmail().equals(employee.getEmail())) { //need to check if employee is null, because if u do comparison on null objects code will break.
+				model.addAttribute("errorMessage", "Employee creation failed. This email address already belongs to an other employee.");
+				return "employees/employee-creation-error";
+			}
+		}
+		//When updating an existing employee
+		else if(employee.getEmployeeId() != 0 && !result.hasErrors()) {
+			//If email is being changed while updation, we need to check if this changed email already exists in DB for some other employee.
+			Employee employeeFromRepo = employeeService.getEmployeeByEmail(employee.getEmail());
+			if(employeeFromRepo != null && employeeFromRepo.getEmployeeId() != employee.getEmployeeId()) {
+				model.addAttribute("errorMessage", "Employee updation failed. This email address already belongs to an other employee.");
+				return "employees/employee-creation-error";
+			}
+		}
+		else if(result.hasErrors()) {
 			return "employees/employee-creation-error";
 		}
+		
 		employeeService.save(employee);
 		return "redirect:/employees";
 	}
@@ -63,10 +83,5 @@ public class EmployeeController {
 		employeeService.deleteEmployee(employeeService.getEmployeeById(id));
 		return "redirect:/employees";
 	}
-	
-	
-	
-	
-	
 	
 }

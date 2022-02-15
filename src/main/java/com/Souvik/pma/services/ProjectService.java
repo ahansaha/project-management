@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.Souvik.pma.dao.IProjectRepository;
 import com.Souvik.pma.dto.IChartData;
+import com.Souvik.pma.dto.ITimelineData;
 import com.Souvik.pma.entities.Project;
 
 @Service
@@ -33,5 +34,9 @@ public class ProjectService {
 	
 	public void deleteProject(Project project) {
 		projectRepository.delete(project);
+	}
+	
+	public List<ITimelineData> displayProjectTimelines() {
+		return projectRepository.displayProjectTimelines();
 	}
 }

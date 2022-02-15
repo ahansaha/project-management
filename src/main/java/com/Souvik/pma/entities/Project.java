@@ -1,9 +1,11 @@
 package com.Souvik.pma.entities;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -19,6 +21,7 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.lang.NonNull;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -32,16 +35,24 @@ public class Project {
 	private long projectId;
 	
 	@NotBlank(message = "Must give a project name")
-	@Size(min = 5, max = 50, message = "Project name must lie between 5 to 50 characters")
+	@Size(min = 5, max = 50, message = "Project name must lie between {min} to {max} characters")
 	private String name;
 	
 	@NotNull
 	private String stage; //Not started, Completed, In progress
 	
 	@NotBlank(message = "Must give the description of the project")
-	@Size(min = 20, max = 250, message = "Project description must lie between 20 to 250 characters")
+	@Size(min = 20, max = 250, message = "Project description must lie between {min} to {max} characters")
 	private String description;
 	
+	@NotNull(message = "Start date can't be empty")
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
+	private Date startDate;
+	
+	@NotNull(message = "End date can't be empty")
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
+	private Date endDate;
+
 	@ManyToMany(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH},
 			   fetch = FetchType.LAZY)
 	@JoinTable(name = "project_employee",
@@ -49,7 +60,7 @@ public class Project {
 			   inverseJoinColumns = @JoinColumn(name = "employee_id"))
 	@JsonIgnore
 	@NotEmpty(message = "Must assign at least one employee to a project")
-	private List<Employee> employees;  //One project can have multiple employees
+	private List<Employee> employees;  //Many project's can have multiple employees
 	
 	public Project() {
 		
@@ -108,5 +119,23 @@ public class Project {
 			employees = new ArrayList<>();
 		}
 		employees.add(emp);
+	}
+
+	public Date getStartDate() {
+		return startDate;
+	}
+
+	public void setStartDate(Date startDate) {
+		this.startDate = startDate;
+	}
+
+	public Date getEndDate() {
+		return endDate;
+	}
+
+	public void setEndDate(Date endDate) {
+		this.endDate = endDate;
 	}	
+	
+	
 }

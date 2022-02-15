@@ -34,17 +34,18 @@ public class Employee {
 	private long employeeId;
 	
 	@NotBlank(message = "Must enter the employee's first name")
-	@Size(min = 2, max = 50, message = "Employee first name must lie between 2 to 50 characters")
+	@Size(min = 2, max = 50, message = "Employee first name must lie between {min} to {max} characters")
 	private String firstName;
 	
 	@NotBlank(message = "Must enter the employee's last name")
-	@Size(min = 1, max = 50, message = "Employee last name must lie between 1 to 50 characters")
+	@Size(min = 1, max = 50, message = "Employee last name must lie between {min} to {max} characters")
 	private String lastName;
 	
 	//NotNull, Size, Email is a client side validation i.e when filling forms or sending the json body request.
 	@NotBlank(message = "Email cannot be empty")
 	@Email(message = "Must be a valid email address")
-	@UniqueValue(groups = IMarkerOnCreate.class)
+	//@UniqueValue(groups = IMarkerOnCreate.class)
+	//@UniqueValue(message = "Email ID for a new employee must be unique")
 	private String email;
 	
 	@ManyToMany(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH},

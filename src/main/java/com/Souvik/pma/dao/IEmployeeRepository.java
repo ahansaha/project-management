@@ -10,7 +10,6 @@ import org.springframework.data.repository.PagingAndSortingRepository;
 import com.Souvik.pma.dto.IEmployeeProject;
 import com.Souvik.pma.entities.Employee;
 
-//@RepositoryRestResource(collectionResourceRel = "spring-rest-employees", path = "spring-rest-employees")
 public interface IEmployeeRepository extends PagingAndSortingRepository<Employee, Long> {
 	
 	@Override

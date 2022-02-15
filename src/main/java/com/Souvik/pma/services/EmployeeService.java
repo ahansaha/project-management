@@ -31,6 +31,10 @@ public class EmployeeService {
 		return employeeRepository.findById(id).get();
 	}
 	
+	public Employee getEmployeeByEmail(String email) {
+		return employeeRepository.findByEmail(email);
+	}
+	
 	public void deleteEmployee(Employee employee) {
 		employeeRepository.delete(employee);
 	}

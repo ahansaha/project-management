@@ -7,9 +7,9 @@ import org.springframework.data.repository.PagingAndSortingRepository;
 //import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 
 import com.Souvik.pma.dto.IChartData;
+import com.Souvik.pma.dto.ITimelineData;
 import com.Souvik.pma.entities.Project;
 
-//@RepositoryRestResource(collectionResourceRel = "spring-rest-projects", path = "spring-rest-projects")
 public interface IProjectRepository extends PagingAndSortingRepository<Project, Long> {
 	
 	@Override
@@ -17,4 +17,7 @@ public interface IProjectRepository extends PagingAndSortingRepository<Project, 
 	
 	@Query(nativeQuery = true, value = "select STAGE as label, count(STAGE) as value from PROJECT group by STAGE")
 	public List<IChartData> getProjectStatus();
+	
+	@Query(nativeQuery = true, value = "SELECT name AS projectName, start_date AS startDate, end_date AS endDate FROM project")
+	public List<ITimelineData> displayProjectTimelines();
 }
