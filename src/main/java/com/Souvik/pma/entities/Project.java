@@ -42,7 +42,7 @@ public class Project {
 	private String stage; //Not started, Completed, In progress
 	
 	@NotBlank(message = "Must give the description of the project")
-	@Size(min = 20, max = 250, message = "Project description must lie between {min} to {max} characters")
+	@Size(min = 20, max = 150, message = "Project description must lie between {min} to {max} characters")
 	private String description;
 	
 	@NotNull(message = "Start date can't be empty")
