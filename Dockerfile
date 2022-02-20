@@ -1,11 +1,12 @@
-FROM ubuntu-jdk
+FROM ubuntu:latest
 MAINTAINER Souvik Saha "ahansaha@gmail.com"
 
-ENV version=aws-db-usage
-ENV jdbcurl=jdbc:postgresql://pmadatabaseaws.cltctyuo2hpy.us-east-1.rds.amazonaws.com:5432/postgres
+ENV version=0.1.1.Prod
+ENV jdbcurl=jdbc:postgresql://pma-database-aws.cltctyuo2hpy.us-east-1.rds.amazonaws.com:5432/postgres
 ENV dbuser=postgres
 ENV dbpass=password321
 
-WORKDIR /usr/local/bin
-ADD target/pm-app.jar .
+RUN apt-get update && apt-get install -y openjdk-8-jdk
+WORKDIR /usr/local/bin/
+ADD target/pm-app.jar  .
 ENTRYPOINT ["java", "-jar", "pm-app.jar"]

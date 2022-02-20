@@ -9,11 +9,11 @@
 
 	<div class="container">
 	
-		<form th:object="${employee}">
+		<form th:object="${userAccount}">
 			
 			<br>
 			
-			<h4>Validation error's while creating/updating employee. Please go through the below errors once.</h4> 
+			<h4>Validation error's while registering user. Please go through the below errors once.</h4> 
 			
 			<br>
 			
@@ -22,16 +22,16 @@
 			</script>
 			
 			<div th:if="${#fields.hasAnyErrors()}">					
-					<ul>
-						<li style="color:red" th:each="err : ${#fields.allErrors()}" th:text="${err}" />
-					</ul>
+				<ul>
+					<li style="color:red" th:each="err : ${#fields.allErrors()}" th:text="${err}" />
+				</ul>
 			</div>
 			
 			<div style="color:red" id="validationError"></div>
 			
 			<br>
 			
-			<h4>You may try to update/create the employee again by navigating the links in the navbar.</h4>
+			<h4>You may try to register again by navigating the links in the navbar.</h4>
 			
 			<br>
 			
@@ -41,7 +41,7 @@
 	
 	<!-- <footer th:replace = "layouts :: pmaFooter"></footer> -->
 	
-	<script type="text/javascript" th:src="@{/js/employeeValidation.js}"></script>
+	<script type="text/javascript" th:src="@{/js/userValidation.js}"></script>
 	
 </body>
 </html>

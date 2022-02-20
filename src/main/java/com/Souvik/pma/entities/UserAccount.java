@@ -7,6 +7,9 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 
 @Entity
 @Table(name = "user_accounts")
@@ -19,11 +22,19 @@ public class UserAccount {
 	private long userID;
 	
 	@Column(name = "username")
+	@NotBlank(message = "Must enter user name")
+	@Size(min = 5, max = 50, message = "User name must lie between {min} to {max} characters")
 	private String userName;
 	
+	@NotBlank(message = "Email cannot be empty")
+	@Email(message = "Must be a valid email address")
 	private String email;
 	
+	@NotBlank(message = "Must enter password")
+	@Size(min = 5, max = 50, message = "Password must lie between {min} to {max} characters")
 	private String password;
+	
+	private String role = "ROLE_ADMIN";
 	
 	private boolean enabled = true;
 	
@@ -61,6 +72,14 @@ public class UserAccount {
 
 	public void setPassword(String password) {
 		this.password = password;
+	}
+
+	public String getRole() {
+		return role;
+	}
+
+	public void setRole(String role) {
+		this.role = role;
 	}
 
 	public boolean isEnabled() {

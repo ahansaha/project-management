@@ -37,10 +37,17 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 	protected void configure(HttpSecurity http) throws Exception {
 		http.authorizeRequests()
 			.antMatchers("/projects/new").hasRole("ADMIN")
+			.antMatchers("/projects/update").hasRole("ADMIN")
 			.antMatchers("/projects/save").hasRole("ADMIN")
+			.antMatchers("/projects/delete").hasRole("ADMIN")
+			
 			.antMatchers("/employees/new").hasRole("ADMIN")
+			.antMatchers("/employees/update").hasRole("ADMIN")
 			.antMatchers("/employees/save").hasRole("ADMIN")
+			.antMatchers("/employees/delete").hasRole("ADMIN")
+			
 			.antMatchers("/", "/**").permitAll()
+			
 			.and()
 			.csrf().ignoringAntMatchers("/app-api/employees/**").ignoringAntMatchers("/app-api/projects/**")
 				   .ignoringAntMatchers("/spring-rest-projects/**").ignoringAntMatchers("/spring-rest-employees/**")

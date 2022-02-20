@@ -82,7 +82,7 @@
 			</plugin>
 		</plugins>
 		
-		<!-- <finalName>pm-app</finalName> -->
+		<finalName>pm-app</finalName>
 	</build>
 
 </project>

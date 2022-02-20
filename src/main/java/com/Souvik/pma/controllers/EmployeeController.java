@@ -2,23 +2,20 @@ package com.Souvik.pma.controllers;
 
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.Errors;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.Souvik.pma.dao.IEmployeeRepository;
 import com.Souvik.pma.entities.Employee;
+import com.Souvik.pma.helper.Message;
 import com.Souvik.pma.services.EmployeeService;
 
 @Controller
@@ -43,7 +40,7 @@ public class EmployeeController {
 	}
 	
 	@PostMapping("/save")
-	public String createEmployee(@Valid Employee employee, BindingResult result, Model model) {
+	public String createEmployee(@Valid Employee employee, BindingResult result, Model model, HttpSession session) {
 		
 		//When creating a new employee
 		if(employee.getEmployeeId() == 0 && !result.hasErrors() ) {
@@ -67,6 +64,7 @@ public class EmployeeController {
 			return "employees/employee-creation-error";
 		}
 		
+		session.setAttribute("message", new Message("success", "Employee entered successfully"));
 		employeeService.save(employee);
 		return "redirect:/employees";
 	}
@@ -79,8 +77,9 @@ public class EmployeeController {
 	}
 	
 	@GetMapping("/delete")
-	public String deleteEmployee(@RequestParam("id") long id) {
+	public String deleteEmployee(@RequestParam("id") long id, HttpSession session) {
 		employeeService.deleteEmployee(employeeService.getEmployeeById(id));
+		session.setAttribute("message", new Message("warning", "Employee deleted"));
 		return "redirect:/employees";
 	}
 	

@@ -10,7 +10,11 @@
 	
 	<div class="container">
 		<br>
+		
 		<h4>Current Employees</h4>
+		
+		<div th:replace = "layouts :: pmaGenericAlert"></div>
+		
 		<hr>
 		
 		<a th:href="@{/employees/new}" class="btn btn-primary btn-sm mb-3">New Employee</a>

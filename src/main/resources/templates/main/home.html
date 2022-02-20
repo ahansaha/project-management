@@ -11,8 +11,13 @@
 	<div class="container">
 	
 		<br>
+		
 		<h3>Main Dashboard</h3>
+		
 		<a th:text = "${versionNumber}"></a>
+		
+		<div th:replace = "layouts :: pmaGenericAlert"></div>
+		
 		<hr>
 		
 		<h4>Current Projects</h4>
@@ -20,6 +25,10 @@
 			
 			<div class="col-md-6">
 				<table th:replace = "layouts :: pmaProjectTableHome"></table>
+			</div>
+			
+			<div class="col-md-2">
+			
 			</div>
 	
 	

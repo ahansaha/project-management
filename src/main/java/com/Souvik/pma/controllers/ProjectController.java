@@ -1,27 +1,23 @@
 package com.Souvik.pma.controllers;
 
-import java.util.Date;
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.Errors;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.Souvik.pma.dto.ITimelineData;
 import com.Souvik.pma.entities.Employee;
 import com.Souvik.pma.entities.Project;
-import com.Souvik.pma.markerInterfaces.IMarkerOnCreate;
+import com.Souvik.pma.helper.Message;
 import com.Souvik.pma.services.EmployeeService;
 import com.Souvik.pma.services.ProjectService;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -57,13 +53,13 @@ public class ProjectController{
 	}
 	
 	@PostMapping("/save")
-	public String createProject(@Valid Project project, BindingResult result, Model model) {
+	public String createProject(@Valid Project project, BindingResult result, Model model, HttpSession session) {
 		
 		
 		if(!result.hasErrors()) {
 			//EndDate must always be greater than startDate.
 			if(project.getStartDate().after(project.getEndDate())) {
-				model.addAttribute("errorMessage", "End date can't be smaller than start date.");
+				model.addAttribute("errorMessage", "End date can't be earlier than start date.");
 				return "projects/project-creation-error";
 			}
 		}
@@ -72,6 +68,7 @@ public class ProjectController{
 		}
 		
 		projectService.save(project);
+		session.setAttribute("message", new Message("success", "Project entered successfully"));
 		return "redirect:/projects";
 	}
 	
@@ -88,8 +85,9 @@ public class ProjectController{
 	}
 	
 	@GetMapping("delete")
-	public String deleteProject(@RequestParam("id") long id) {
+	public String deleteProject(@RequestParam("id") long id, HttpSession session) {
 		projectService.deleteProject(projectService.getProjectById(id));
+		session.setAttribute("message", new Message("warning", "Project deleted"));
 		return "redirect:/projects";
 	}
 	

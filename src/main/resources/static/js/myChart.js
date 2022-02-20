@@ -28,8 +28,9 @@ for(var i = 0; i < chartJson.length ; i++) {
 const data = {
 	labels: labelData,
 	datasets: [{
-		  label: 'My First dataset',
-		  backgroundColor: ['#3e95cd', '#8e5ea2', '#3cba9f'],
+		  label: 'DataSet',
+		  					//COMPLETED              INPROGRESS             NOTSTARTED
+		  backgroundColor: ['#003f5c', '#bc5090', '#ffa600'],
 		  data: numericData
 	}]
 };

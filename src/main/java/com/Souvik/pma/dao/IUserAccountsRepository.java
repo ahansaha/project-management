@@ -12,4 +12,8 @@ public interface IUserAccountsRepository extends PagingAndSortingRepository<User
 	
 	@Override
 	public List<UserAccount> findAll();
+
+	public UserAccount getUserByEmail(String email);
+
+	public UserAccount getUserByuserName(String userName);
 }
