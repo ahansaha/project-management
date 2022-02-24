@@ -98,27 +98,4 @@ public class EmployeeApiController {
 		Pageable pageable = PageRequest.of(page, size);
 		return employeeRepository.findAll(pageable).getContent();
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 }

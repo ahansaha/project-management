@@ -31,7 +31,7 @@ public class UserAccount {
 	private String email;
 	
 	@NotBlank(message = "Must enter password")
-	@Size(min = 5, max = 50, message = "Password must lie between {min} to {max} characters")
+	@Size(min = 5, message = "Password must be at least {min} characters long")
 	private String password;
 	
 	private String role = "ROLE_ADMIN";

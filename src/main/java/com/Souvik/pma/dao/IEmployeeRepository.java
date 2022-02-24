@@ -3,9 +3,7 @@ package com.Souvik.pma.dao;
 import java.util.List;
 
 import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.PagingAndSortingRepository;
-//import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 
 import com.Souvik.pma.dto.IEmployeeProject;
 import com.Souvik.pma.entities.Employee;

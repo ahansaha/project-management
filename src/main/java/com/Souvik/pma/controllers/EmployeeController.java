@@ -6,6 +6,7 @@ import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -27,10 +28,35 @@ public class EmployeeController {
 	
 	@GetMapping
 	public String displayEmployees(Model model) {
-		List<Employee> employees = employeeService.getAll();
+		
+		return displayPaginatedEmployees(1, model);
+		
+//		List<Employee> employees = employeeService.getAll();		
+//		model.addAttribute("employees", employees);
+//		return "employees/employee-list";
+	}
+	
+	@GetMapping("/page")
+	public String displayPaginatedEmployees(@RequestParam("pageNo") int pageNo, Model model) {
+		
+		int pageSize = 5;
+		
+		Page<Employee> page = employeeService.getPaginatedEmployees(pageNo, pageSize);
+		List<Employee> employees = page.getContent();
+		
+		model.addAttribute("currentPage", pageNo);
+		model.addAttribute("totalPages", page.getTotalPages());
+		model.addAttribute("totalItems", page.getTotalElements());
+		model.addAttribute("totalItemsInPage", page.getSize());
+		
+		model.addAttribute("currentPageBy2", pageNo / 2);
+		model.addAttribute("currentPagePlusTotalPagesBy2", (pageNo + page.getTotalPages()) / 2);
+		
 		model.addAttribute("employees", employees);
+		
 		return "employees/employee-list";
 	}
+	
 	
 	@GetMapping("/new")
 	public String displayEmployeeForm(Model model) {

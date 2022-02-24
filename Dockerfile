@@ -1,7 +1,7 @@
 FROM ubuntu:latest
 MAINTAINER Souvik Saha "ahansaha@gmail.com"
 
-ENV version=0.1.1.Prod
+ENV version=0.2.0
 ENV jdbcurl=jdbc:postgresql://pma-database-aws.cltctyuo2hpy.us-east-1.rds.amazonaws.com:5432/postgres
 ENV dbuser=postgres
 ENV dbpass=password321
