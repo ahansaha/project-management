@@ -39,7 +39,7 @@ public class EmployeeController {
 	@GetMapping("/page")
 	public String displayPaginatedEmployees(@RequestParam("pageNo") int pageNo, Model model) {
 		
-		int pageSize = 5;
+		int pageSize = 1;
 		
 		Page<Employee> page = employeeService.getPaginatedEmployees(pageNo, pageSize);
 		List<Employee> employees = page.getContent();
