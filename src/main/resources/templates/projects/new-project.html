@@ -66,21 +66,39 @@
 			
 			<br>
 			
-			<div class="form-row">
+			<!-- <div class="form-row">
 				<div class="input-group mb-3">
 				  <div class="input-group-prepend">
 				  		<label class="input-group-text" for="inputProjectEmp">Assign employees</label>
 				  </div>
-				  <select th:field = "*{employees}" multiple="multiple" id="inputProjectEmp" class="custom-select">
+				  <select th:field = "*{employees}" multiple="multiple" id="inputProjectEmp" class="mul-select" style="width: 80%;">
 						<option th:each = "employee : ${allEmployees}"
 								th:value = "${employee.employeeId}"
 								th:text = "${employee.firstName}">
 						</option>
-					</select>
+				  </select>
 				</div>
+			</div> -->
+			
+			<div class="form-row">
+				<label class="input-group-text col-md-2" for="inputProjectEmp">Assign employees</label>
+				<select th:field = "*{employees}" multiple="multiple" id="inputProjectEmp" class="mul-select col-md-10">
+					<option th:each = "employee : ${allEmployees}"
+							th:value = "${employee.employeeId}"
+							th:text = "${employee.firstName}">
+					</option>
+				</select>					
 			</div>
 			
-			<!-- <input type="hidden" name="_csrf" th:value="${_csrf.token}" /> -->
+			<script>
+		        $(document).ready(function() {
+		            $(".mul-select").select2({
+		                    placeholder: "Select employees",
+		                    tags: true,
+		                    tokenSeparators: ['/',',',';'," "] 
+		            });
+		        })
+		    </script>
 			
 			<br>
 			<div class="form-row">

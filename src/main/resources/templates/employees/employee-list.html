@@ -19,75 +19,7 @@
 		
 		<a th:href="@{/employees/new}" class="btn btn-primary btn-sm mb-3">New Employee</a>
 		
-		<table th:replace = "layouts :: pmaEmployeeTableAllEdit"></table>
-		
-		<div th:if="${totalPages > 1}">
-			<ul class="pagination justify-content-center">
-
-				<!-- For previous button -->
-			    <li th:if="${currentPage > 1}" class="page-item">
-			      	<a th:href="@{'/employees/page?pageNo=' + ${currentPage - 1}}" class="page-link" aria-label="Previous">
-			        	<!-- <span aria-hidden="true">&laquo;</span> -->
-			        	<span>Previous</span>
-			      	</a>
-			    </li>
-			    <li th:unless="${currentPage > 1}" class="page-item disabled">
-			      	<a th:href="@{'#'}" class="page-link" aria-label="Previous">
-			        	<!-- <span aria-hidden="true">&laquo;</span> -->
-			        	<span>Previous</span>
-			      	</a>
-			    </li>
-
-			    <!-- For currentPage / 2 -->
-			    <li th:if="${currentPage >= 4}" class="page-item">
-			    	<a class="page-link" th:href="@{'/employees/page?pageNo=' + ${currentPage / 2}}">
-			    		<span th:text="${currentPage / 2}"></span>
-			    	</a>
-			    </li>
-			    <!-- <li th:unless="${currentPage >= 4}" class="page-item">
-				    <a class="page-link" th:href="@{'/employees/page?pageNo=1'}">
-				    	<span th:text="1"></span>
-				    </a>
-			    </li> -->
-
-
-			    <!-- For current page -->
-			    <li class="page-item disabled">
-				    <a class="page-link" th:href="@{'#'}">
-				    	<span th:text="${currentPage}"></span>
-				    </a>
-			    </li>
-
-
-			    <!-- For (current page + totalPages) / 2 -->
-			    <li th:if="${currentPage <= totalPages - 3}" class="page-item">
-				    <a class="page-link" th:href="@{'/employees/page?pageNo=' + ${(currentPage + totalPages) / 2}}">
-				    	<span th:text="${(currentPage + totalPages) / 2}"></span>
-				    </a>
-			    </li>
-			    <!-- <li th:unless="${currentPage <= totalPages - 3}" class="page-item">
-				    <a class="page-link" th:href="@{'/employees/page?pageNo=' + ${totalPages}}">
-				    	<span th:text="${totalPages}"></span>
-				    </a>
-			    </li> -->
-
-
-			    <!-- For next button -->
-			    <li th:if="${currentPage < totalPages}" class="page-item">
-			      	<a th:href="@{'/employees/page?pageNo=' + ${currentPage + 1}}" class="page-link" aria-label="Next">
-			        	<!-- <span aria-hidden="true">&raquo;</span> -->
-				        <span>Next</span>
-			      	</a>
-			    </li>
-			    <li th:unless="${currentPage < totalPages}" class="page-item disabled">
-			      	<a th:href="@{'#'}" class="page-link" aria-label="Next">
-			        	<!-- <span aria-hidden="true">&raquo;</span> -->
-			        	<span>Next</span>
-			      	</a>
-			    </li>
-
-  			</ul>
-		</div>
+		<div th:replace = "layouts :: pmaEmployeeTableAllEditPaginated"></div>
 		
 	</div>
 	

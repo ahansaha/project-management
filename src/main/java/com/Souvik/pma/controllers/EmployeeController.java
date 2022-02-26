@@ -39,7 +39,7 @@ public class EmployeeController {
 	@GetMapping("/page")
 	public String displayPaginatedEmployees(@RequestParam("pageNo") int pageNo, Model model) {
 		
-		int pageSize = 1;
+		int pageSize = 5;
 		
 		Page<Employee> page = employeeService.getPaginatedEmployees(pageNo, pageSize);
 		List<Employee> employees = page.getContent();
@@ -49,8 +49,8 @@ public class EmployeeController {
 		model.addAttribute("totalItems", page.getTotalElements());
 		model.addAttribute("totalItemsInPage", page.getSize());
 		
-		model.addAttribute("currentPageBy2", pageNo / 2);
-		model.addAttribute("currentPagePlusTotalPagesBy2", (pageNo + page.getTotalPages()) / 2);
+//		model.addAttribute("currentPageBy2", pageNo / 2);
+//		model.addAttribute("currentPagePlusTotalPagesBy2", (pageNo + page.getTotalPages()) / 2);
 		
 		model.addAttribute("employees", employees);
 		

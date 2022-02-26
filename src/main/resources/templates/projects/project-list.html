@@ -21,7 +21,8 @@
 		
 		<a th:href="@{/projects/timelines}" class="btn btn-primary btn-sm mb-3">Project Timelines</a>
 		
-		<table th:replace = "layouts :: pmaProjectTableAllEdit"></table>
+		<div th:replace = "layouts :: pmaProjectTableAllEditPaginated"></div>
+		
 	</div>
 	
 	<!-- <footer th:replace = "layouts :: pmaFooter"></footer> -->

@@ -17,8 +17,14 @@
 	integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
 	integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+	
+	<!-- Bootstrap JS -->
 	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" 
 	integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+	
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.0/css/select2.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.0/js/select2.min.js"></script>
     
     <link rel = "stylesheet" type="text/css" media="all" 
     href="/css/formatting.css" th:href = "@{/css/formatting.css}" />
@@ -27,17 +33,19 @@
     <script  src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     
     <!-- Jquery stuff for timelines -->
-    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-	<!-- <link rel="stylesheet" href="/resources/demos/style.css"> -->
+    <!-- <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+	<link rel="stylesheet" href="/resources/demos/style.css">
 	<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/base/jquery.ui.all.css">
 	<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script> -->
 
 </head>
 
 <body>
 
-	<!-- Common navbar -->
+	<!-- ########################################################## Common navbar ##############################################################################-->
+	
+	
 	<nav th:fragment = "pmaNavbar" class="navbar navbar-expand-lg navbar-dark bg-dark">
 	    <div class="container-fluid">
 	        <a class="navbar-brand" href="/">Project IO</a>
@@ -85,6 +93,13 @@
 	
 	
 	
+	
+	
+	
+	
+	
+	<!-- ################################################################# PROJECTS ############################################################################# -->
+	
 	<!-- List of all projects with the columns (Basically all cols except the ID col) ONLY VIEW ALL PROJECTS. NO DELETE OR UPDATE.
 			name
 			stage
@@ -115,10 +130,10 @@
 	<table th:fragment = "pmaProjectTableAllEdit" class="table table-bordered table-striped">
 		<thead class = "thead-dark">
 			<tr>
-				<th class="col-md-auto"> Project name </th>
-				<th class="col-md-auto"> Project stage</th>
-				<th class="col-md-auto"> Project description </th>
-				<th class="col-2"> Action </th>
+				<th class="col-md-2"> Project name </th>
+				<th class="col-md-1"> Project stage</th>
+				<th class="col-md-6"> Project description </th>
+				<th class="col-md-2"> Action </th>
 			</tr>
 		</thead>
 		<tbody>
@@ -134,8 +149,119 @@
 			</tr>
 		</tbody>
 	</table>
+
+
+
+	<!-- List of all projects with the columns (Basically all cols except the ID col) UPDATE AND DELETE AS WELL.
+			name
+			stage
+			description
+
+			WITH PAGINATION
+	 -->
+
+	<div th:fragment = "pmaProjectTableAllEditPaginated">
+		<table class="table table-bordered table-striped">
+			<thead class = "thead-dark">
+				<tr>
+					<th class="col-md-2"> Project name </th>
+					<th class="col-md-1"> Project stage</th>
+					<th class="col-md-6"> Project description </th>
+					<th class="col-md-2"> Action </th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each = "aProject : ${projects}">
+					<td th:text = "${aProject.name}"></td>
+					<td th:text = "${aProject.stage}"></td>
+					<td th:text = "${aProject.description}"></td>
+					<td>
+						<a th:href="@{/projects/update(id=${aProject.projectId})}" class="btn btn-info btn-sm">Update</a>
+						<a th:href="@{/projects/delete(id=${aProject.projectId})}" class="btn btn-danger btn-sm" 
+						   onclick="if (!(confirm('Are you sure you want to delete this project ?'))) return false">Delete</a>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+		
+		<div th:if="${totalPages > 1}">
+            <ul class="pagination justify-content-center">
+
+                <!-- For previous button -->
+                <li th:if="${currentPage > 1}" class="page-item">
+                    <a th:href="@{'/projects/page?pageNo=' + ${currentPage - 1}}" class="page-link" aria-label="Previous">
+                        <!-- <span aria-hidden="true">&laquo;</span> -->
+                        <span>Previous</span>
+                    </a>
+                </li>
+                <li th:unless="${currentPage > 1}" class="page-item disabled">
+                    <a th:href="@{'#'}" class="page-link" aria-label="Previous">
+                        <!-- <span aria-hidden="true">&laquo;</span> -->
+                        <span>Previous</span>
+                    </a>
+                </li>
+
+                <!-- For currentPage / 2 -->
+                <li th:if="${currentPage >= 4}" class="page-item">
+                    <a class="page-link" th:href="@{'/projects/page?pageNo=' + ${currentPage / 2}}">
+                        <span th:text="${currentPage / 2}"></span>
+                    </a>
+                </li>
+                <!-- <li th:unless="${currentPage >= 4}" class="page-item">
+                    <a class="page-link" th:href="@{'/projects/page?pageNo=1'}">
+                        <span th:text="1"></span>
+                    </a>
+                </li> -->
+
+
+                <!-- For current page -->
+                <li class="page-item disabled">
+                    <a class="page-link" th:href="@{'#'}">
+                        <span th:text="${currentPage}"></span>
+                    </a>
+                </li>
+
+
+                <!-- For (current page + totalPages) / 2 -->
+                <li th:if="${currentPage <= totalPages - 3}" class="page-item">
+                    <a class="page-link" th:href="@{'/projects/page?pageNo=' + ${(currentPage + totalPages) / 2}}">
+                        <span th:text="${(currentPage + totalPages) / 2}"></span>
+                    </a>
+                </li>
+                <!-- <li th:unless="${currentPage <= totalPages - 3}" class="page-item">
+                    <a class="page-link" th:href="@{'/projects/page?pageNo=' + ${totalPages}}">
+                        <span th:text="${totalPages}"></span>
+                    </a>
+                </li> -->
+
+
+                <!-- For next button -->
+                <li th:if="${currentPage < totalPages}" class="page-item">
+                    <a th:href="@{'/projects/page?pageNo=' + ${currentPage + 1}}" class="page-link" aria-label="Next">
+                        <!-- <span aria-hidden="true">&raquo;</span> -->
+                        <span>Next</span>
+                    </a>
+                </li>
+                <li th:unless="${currentPage < totalPages}" class="page-item disabled">
+                    <a th:href="@{'#'}" class="page-link" aria-label="Next">
+                        <!-- <span aria-hidden="true">&raquo;</span> -->
+                        <span>Next</span>
+                    </a>
+                </li>
+
+            </ul>
+        </div>
+	</div>
 	
 	
+	
+	
+	
+	
+	
+	
+	
+	<!-- ################################################################# EMPLOYEES ############################################################################# -->
 	
 	
 	<!-- List of all employees with the columns (Basically all cols except the ID col) ONLY VIEW ALL EMPLOYEES. NO DELETE OR UPDATE.
@@ -168,10 +294,10 @@
 	<table th:fragment = "pmaEmployeeTableAllEdit" class="table table-bordered table-striped">
 		<thead class = "thead-dark">
 			<tr>
-				<th> Employee first name </th>
-				<th> Employee last name </th>
-				<th> Projects count </th>
-				<th> Action </th>
+				<th class="col-md-3"> Employee first name </th>
+				<th class="col-md-3"> Employee last name </th>
+				<th class="col-md-3"> Employee email </th>
+				<th class="col-md-3"> Action </th>
 			</tr>
 		</thead>
 		<tbody>
@@ -188,8 +314,123 @@
 		</tbody>
 	</table>
 	
+	<!-- List of all employees with the columns (Basically all cols except the ID col) UPDATE AND DELETE AS WELL.
+			first name
+			last name
+			email address
+			
+			WITH PAGINATION
+	-->
+	<div th:fragment = "pmaEmployeeTableAllEditPaginated">
+		<table class="table table-bordered table-striped">
+			<thead class = "thead-dark">
+				<tr>
+					<th class="col-md-3"> Employee first name </th>
+					<th class="col-md-3"> Employee last name </th>
+					<th class="col-md-3"> Employee email </th>
+					<th class="col-md-3"> Action </th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each = "anEmployee : ${employees}">
+					<td th:text = "${anEmployee.firstName}"></td>
+					<td th:text = "${anEmployee.lastName}"></td>
+					<td th:text = "${anEmployee.email}"></td>
+					<td>
+						<a th:href="@{/employees/update(id=${anEmployee.employeeId})}" class="btn btn-info btn-sm">Update</a>
+						<a th:href="@{/employees/delete(id=${anEmployee.employeeId})}" class="btn btn-danger btn-sm" 
+						   onclick="if (!(confirm('Are you sure you want to delete this employee ?'))) return false">Delete</a>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+		
+		<div th:if="${totalPages > 1}">
+			<ul class="pagination justify-content-center">
+
+				<!-- For previous button -->
+			    <li th:if="${currentPage > 1}" class="page-item">
+			      	<a th:href="@{'/employees/page?pageNo=' + ${currentPage - 1}}" class="page-link" aria-label="Previous">
+			        	<!-- <span aria-hidden="true">&laquo;</span> -->
+			        	<span>Previous</span>
+			      	</a>
+			    </li>
+			    <li th:unless="${currentPage > 1}" class="page-item disabled">
+			      	<a th:href="@{'#'}" class="page-link" aria-label="Previous">
+			        	<!-- <span aria-hidden="true">&laquo;</span> -->
+			        	<span>Previous</span>
+			      	</a>
+			    </li>
+
+			    <!-- For currentPage / 2 -->
+			    <li th:if="${currentPage >= 4}" class="page-item">
+			    	<a class="page-link" th:href="@{'/employees/page?pageNo=' + ${currentPage / 2}}">
+			    		<span th:text="${currentPage / 2}"></span>
+			    	</a>
+			    </li>
+			    <!-- <li th:unless="${currentPage >= 4}" class="page-item">
+				    <a class="page-link" th:href="@{'/employees/page?pageNo=1'}">
+				    	<span th:text="1"></span>
+				    </a>
+			    </li> -->
+
+
+			    <!-- For current page -->
+			    <li class="page-item disabled">
+				    <a class="page-link" th:href="@{'#'}">
+				    	<span th:text="${currentPage}"></span>
+				    </a>
+			    </li>
+
+
+			    <!-- For (current page + totalPages) / 2 -->
+			    <li th:if="${currentPage <= totalPages - 3}" class="page-item">
+				    <a class="page-link" th:href="@{'/employees/page?pageNo=' + ${(currentPage + totalPages) / 2}}">
+				    	<span th:text="${(currentPage + totalPages) / 2}"></span>
+				    </a>
+			    </li>
+			    <!-- <li th:unless="${currentPage <= totalPages - 3}" class="page-item">
+				    <a class="page-link" th:href="@{'/employees/page?pageNo=' + ${totalPages}}">
+				    	<span th:text="${totalPages}"></span>
+				    </a>
+			    </li> -->
+
+
+			    <!-- For next button -->
+			    <li th:if="${currentPage < totalPages}" class="page-item">
+			      	<a th:href="@{'/employees/page?pageNo=' + ${currentPage + 1}}" class="page-link" aria-label="Next">
+			        	<!-- <span aria-hidden="true">&raquo;</span> -->
+				        <span>Next</span>
+			      	</a>
+			    </li>
+			    <li th:unless="${currentPage < totalPages}" class="page-item disabled">
+			      	<a th:href="@{'#'}" class="page-link" aria-label="Next">
+			        	<!-- <span aria-hidden="true">&raquo;</span> -->
+			        	<span>Next</span>
+			      	</a>
+			    </li>
+
+			</ul>
+		</div>
+	</div>
 	
 	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<!-- ################################################################# HOME PAGE ############################################################################# -->
 	
 	
 	<!-- List of all projects with the columns (This table we are displaying on home page)
@@ -240,6 +481,25 @@
 	</table>
 	
 	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<!-- ################################################################# GENERIC ALERT TEMPLATE ############################################################################# -->
+	
 	<!-- Generic alert template -->
 	<div th:fragment="pmaGenericAlert">
 		<div th:if="${session.message}">
@@ -260,6 +520,16 @@
 	
 	
 	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<!-- ################################################################# COMMON FOOTER ############################################################################# -->
 	
 	
 	<!-- Common footer -->

@@ -6,6 +6,7 @@ import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -35,10 +36,35 @@ public class ProjectController{
 	
 	@GetMapping
 	public String displayProjects(Model model) {
-		List<Project> projects = projectService.getAll();
+		
+		return displayPaginatedProjects(1, model);
+		
+//		List<Project> projects = projectService.getAll();
+//		model.addAttribute("projects", projects);
+//		return "projects/project-list";
+	}
+	
+	@GetMapping("/page")
+	public String displayPaginatedProjects(@RequestParam("pageNo") int pageNo, Model model) {
+		
+		int pageSize = 5;
+		
+		Page<Project> page = projectService.getPaginatedProjects(pageNo, pageSize);
+		List<Project> projects = page.getContent();
+		
+		model.addAttribute("currentPage", pageNo);
+		model.addAttribute("totalPages", page.getTotalPages());
+		model.addAttribute("totalItems", page.getTotalElements());
+		model.addAttribute("totalItemsInPage", page.getSize());
+		
+//		model.addAttribute("currentPageBy2", pageNo / 2);
+//		model.addAttribute("currentPagePlusTotalPagesBy2", (pageNo + page.getTotalPages()) / 2);
+		
 		model.addAttribute("projects", projects);
+
 		return "projects/project-list";
 	}
+	
 	
 	@GetMapping("/new")
 	public String displayProjectForm(Model model) {
