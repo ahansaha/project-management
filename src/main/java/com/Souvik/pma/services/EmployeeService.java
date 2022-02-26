@@ -46,5 +46,10 @@ public class EmployeeService {
 		Pageable pageable = PageRequest.of(pageNo - 1, pageSize);
 		return employeeRepository.findAll(pageable);
 	}
+	
+	public Page<IEmployeeProject> employeeProjectsPaginated(int pageNo, int pageSize) {
+		Pageable pageable = PageRequest.of(pageNo - 1, pageSize);
+		return employeeRepository.employeeProjectsPaginated(pageable);
+	}
 
 }

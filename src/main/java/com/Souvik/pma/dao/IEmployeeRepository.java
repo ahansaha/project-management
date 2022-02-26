@@ -2,6 +2,8 @@ package com.Souvik.pma.dao;
 
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.PagingAndSortingRepository;
 
@@ -15,6 +17,15 @@ public interface IEmployeeRepository extends PagingAndSortingRepository<Employee
 	
 	public Employee findByEmail(String email);
 	
-	@Query(nativeQuery = true, value = "select e.FIRST_NAME as firstName, e.LAST_NAME as lastName, count(pe.EMPLOYEE_ID) as projectCount from EMPLOYEE e left join PROJECT_EMPLOYEE pe on e.EMPLOYEE_ID = pe.EMPLOYEE_ID group by e.FIRST_NAME, e.LAST_NAME order by projectCount desc")
+	@Query(nativeQuery = true, value = "SELECT e.first_name AS firstName, e.last_name AS lastName, COUNT(pe.employee_id) AS projectCount \n"
+			+ "from employee e LEFT JOIN project_employee pe on e.employee_id = pe.employee_id \n"
+			+ "GROUP BY e.first_name, e.last_name \n"
+			+ "ORDER BY projectCount DESC;")
 	public List<IEmployeeProject> employeeProjects();
+
+	@Query(nativeQuery = true, value = "SELECT e.first_name AS firstName, e.last_name AS lastName, COUNT(pe.employee_id) AS projectCount \n"
+			+ "from employee e LEFT JOIN project_employee pe on e.employee_id = pe.employee_id \n"
+			+ "GROUP BY e.first_name, e.last_name \n"
+			+ "ORDER BY projectCount DESC;")
+	public Page<IEmployeeProject> employeeProjectsPaginated(Pageable pageable);
 }

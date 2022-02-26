@@ -4,7 +4,6 @@ import java.util.List;
 
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.PagingAndSortingRepository;
-//import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 
 import com.Souvik.pma.dto.IChartData;
 import com.Souvik.pma.dto.ITimelineData;
@@ -15,7 +14,7 @@ public interface IProjectRepository extends PagingAndSortingRepository<Project, 
 	@Override
 	public List<Project> findAll();
 	
-	@Query(nativeQuery = true, value = "select STAGE as label, count(STAGE) as value from PROJECT group by STAGE")
+	@Query(nativeQuery = true, value = "SELECT stage AS label, COUNT(stage) AS value FROM project GROUP BY stage")
 	public List<IChartData> getProjectStatus();
 	
 	@Query(nativeQuery = true, value = "SELECT name AS projectName, start_date AS startDate, end_date AS endDate FROM project")
