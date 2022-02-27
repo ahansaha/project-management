@@ -47,4 +47,9 @@ public class ProjectService {
 		Pageable pageable = PageRequest.of(pageNo - 1, pageSize);
 		return projectRepository.findAll(pageable);
 	}
+	
+	public Page<ITimelineData> getPaginatedTimelinesData(int pageNo, int pageSize) {
+		Pageable pageable = PageRequest.of(pageNo - 1, pageSize);
+		return projectRepository.getPaginatedProjectTimelines(pageable);
+	}
 }

@@ -2,6 +2,8 @@ package com.Souvik.pma.dao;
 
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.PagingAndSortingRepository;
 
@@ -19,4 +21,10 @@ public interface IProjectRepository extends PagingAndSortingRepository<Project, 
 	
 	@Query(nativeQuery = true, value = "SELECT name AS projectName, start_date AS startDate, end_date AS endDate FROM project")
 	public List<ITimelineData> displayProjectTimelines();
+	
+	@Query(nativeQuery = true,
+		   countQuery = "SELECT COUNT(*) FROM project",
+		   value = "SELECT name AS projectName, start_date AS startDate, end_date AS endDate\n"
+			+ "FROM project")
+	public Page<ITimelineData> getPaginatedProjectTimelines(Pageable pageable);
 }

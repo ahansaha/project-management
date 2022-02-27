@@ -17,15 +17,18 @@ public interface IEmployeeRepository extends PagingAndSortingRepository<Employee
 	
 	public Employee findByEmail(String email);
 	
-	@Query(nativeQuery = true, value = "SELECT e.first_name AS firstName, e.last_name AS lastName, COUNT(pe.employee_id) AS projectCount \n"
+	@Query(nativeQuery = true, 
+		   value = "SELECT e.first_name AS firstName, e.last_name AS lastName, COUNT(pe.employee_id) AS projectCount \n"
 			+ "from employee e LEFT JOIN project_employee pe on e.employee_id = pe.employee_id \n"
 			+ "GROUP BY e.first_name, e.last_name \n"
 			+ "ORDER BY projectCount DESC;")
 	public List<IEmployeeProject> employeeProjects();
 
-	@Query(nativeQuery = true, value = "SELECT e.first_name AS firstName, e.last_name AS lastName, COUNT(pe.employee_id) AS projectCount \n"
+	@Query(nativeQuery = true,
+		   countQuery = "SELECT COUNT(*) FROM employee", //Add the count query, because sometimes spring will not write the countQuery correctly by itself when writing custom queries.
+		   value = "SELECT e.first_name AS firstName, e.last_name AS lastName, COUNT(pe.employee_id) AS projectCount \n"
 			+ "from employee e LEFT JOIN project_employee pe on e.employee_id = pe.employee_id \n"
 			+ "GROUP BY e.first_name, e.last_name \n"
-			+ "ORDER BY projectCount DESC;")
+			+ "ORDER BY projectCount DESC") //Follow baeldung's website's approach.
 	public Page<IEmployeeProject> employeeProjectsPaginated(Pageable pageable);
 }

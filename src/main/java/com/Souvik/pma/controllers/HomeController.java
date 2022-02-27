@@ -30,30 +30,15 @@ public class HomeController {
 	@Autowired
 	EmployeeService employeeService;
 	
+	@Value("${homeProjectPageSize}")
+	int homeProjectPageSize;
+	
+	@Value("${homeEmployeesProjectsCntPageSize}")
+	int homeEmployeesProjectsCntPageSize;
+	
 	@GetMapping("/")
 	public String displayHome(Model model) throws JsonProcessingException {
-		
 		return displayPaginatedHome(1, 1, model);
-		
-//		model.addAttribute("versionNumber", ver);
-//		
-//		List<Project> projects = projectService.getAll();
-//		model.addAttribute("projects", projects);
-//		
-//		List<IChartData> projectData = projectService.getProjectStatus();
-//		
-//		//Converting the projectData object to json for use in javaScript pie chart.
-//		ObjectMapper objectMapper = new ObjectMapper();
-//		String projectDatajsonString = objectMapper.writeValueAsString(projectData);
-//		//projectDatajsonString will now have a json structure like this:
-//		//[["NOT STARTED", 1], ["INPROGRESS", 2], ["COMPLETED", 3]]
-//		
-//		model.addAttribute("projectStatusCnt", projectDatajsonString);
-//		
-//		List<IEmployeeProject> employeesProjectsCnt = employeeService.employeeProjects();
-//		model.addAttribute("employeesListProjectsCnt", employeesProjectsCnt);
-//		
-//		return "main/home";
 	}
 	
 	@GetMapping("/page")
@@ -61,17 +46,18 @@ public class HomeController {
 		
 		model.addAttribute("versionNumber", ver);
 		
-		int homeEmployeesProjectsCntPageSize = 5;
-		int homeProjectPageSize = 5;
-		
 		Page<Project> homeProjectPage = projectService.getPaginatedProjects(homeProjectPageNo, homeProjectPageSize);
 		List<Project> projects = homeProjectPage.getContent();
 		
 		List<IChartData> projectData = projectService.getProjectStatus();
+		//Converting the projectData object to json for use in javaScript pie chart.
 		ObjectMapper objectMapper = new ObjectMapper();
 		String projectDatajsonString = objectMapper.writeValueAsString(projectData);
+		//projectDatajsonString will now have a json structure like this:
+		//[["NOT STARTED", 1], ["INPROGRESS", 2], ["COMPLETED", 3]]
 		
-		Page<IEmployeeProject> homeEmployeesProjectsCntPage = employeeService.employeeProjectsPaginated(homeEmployeesProjectsCntPageNo, homeEmployeesProjectsCntPageSize);
+		
+		Page<IEmployeeProject> homeEmployeesProjectsCntPage = employeeService.getEmployeeProjectsPaginated(homeEmployeesProjectsCntPageNo, homeEmployeesProjectsCntPageSize);
 		List<IEmployeeProject> employeesProjectsCnt = homeEmployeesProjectsCntPage.getContent();
 		
 		model.addAttribute("projects", projects);

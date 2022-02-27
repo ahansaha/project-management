@@ -20,7 +20,7 @@ function drawChart() {
 		dataTable.addRows([
 	    	[ chartJson[i].projectName,  new Date(chartJson[i].startDate),  new Date(chartJson[i].endDate) ]]);
 	}
-
+	
 	chart.draw(dataTable);
 }
 

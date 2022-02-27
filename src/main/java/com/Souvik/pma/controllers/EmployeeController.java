@@ -6,6 +6,7 @@ import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -26,21 +27,17 @@ public class EmployeeController {
 	@Autowired
 	EmployeeService employeeService;
 	
+	@Value("${employeePageSize}")
+	int pageSize;
+	
 	@GetMapping
 	public String displayEmployees(Model model) {
-		
 		return displayPaginatedEmployees(1, model);
-		
-//		List<Employee> employees = employeeService.getAll();		
-//		model.addAttribute("employees", employees);
-//		return "employees/employee-list";
 	}
 	
 	@GetMapping("/page")
 	public String displayPaginatedEmployees(@RequestParam("pageNo") int pageNo, Model model) {
-		
-		int pageSize = 5;
-		
+			
 		Page<Employee> page = employeeService.getPaginatedEmployees(pageNo, pageSize);
 		List<Employee> employees = page.getContent();
 		
@@ -48,9 +45,6 @@ public class EmployeeController {
 		model.addAttribute("totalPages", page.getTotalPages());
 		model.addAttribute("totalItems", page.getTotalElements());
 		model.addAttribute("totalItemsInPage", page.getSize());
-		
-//		model.addAttribute("currentPageBy2", pageNo / 2);
-//		model.addAttribute("currentPagePlusTotalPagesBy2", (pageNo + page.getTotalPages()) / 2);
 		
 		model.addAttribute("employees", employees);
 		

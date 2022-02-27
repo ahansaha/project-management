@@ -15,15 +15,21 @@
 		<h2 class="text-center"> Project Timelines </h2>
 		
 		<br>
+		<br>
 		
 		<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+		<script type="text/javascript" src="https://www.google.com/jsapi"></script>
 		
 		<script type="text/javascript">
 			var timeLineschartData = "[[${projectTimeList}]]"
 		</script>
 	
+		<div th:replace="layouts :: pmaTimeLinesPaginationBar"></div>
 	    
-	  	<div id="chart_timeline" style="height: 100vmin;"></div>
+	    <br>
+	    <br>
+	    
+	  	<div id="chart_timeline" style="height:60vh;"></div>
 	  	
 	  </div>
 

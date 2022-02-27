@@ -6,6 +6,7 @@ import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -34,20 +35,19 @@ public class ProjectController{
 	@Autowired
 	EmployeeService employeeService;
 	
+	@Value("${projectPageSize}")
+	int pageSize;
+	
+	@Value("${timelinesPageSize}")
+	int timelinesPageSize;
+	
 	@GetMapping
 	public String displayProjects(Model model) {
-		
 		return displayPaginatedProjects(1, model);
-		
-//		List<Project> projects = projectService.getAll();
-//		model.addAttribute("projects", projects);
-//		return "projects/project-list";
 	}
 	
 	@GetMapping("/page")
 	public String displayPaginatedProjects(@RequestParam("pageNo") int pageNo, Model model) {
-		
-		int pageSize = 5;
 		
 		Page<Project> page = projectService.getPaginatedProjects(pageNo, pageSize);
 		List<Project> projects = page.getContent();
@@ -56,9 +56,6 @@ public class ProjectController{
 		model.addAttribute("totalPages", page.getTotalPages());
 		model.addAttribute("totalItems", page.getTotalElements());
 		model.addAttribute("totalItemsInPage", page.getSize());
-		
-//		model.addAttribute("currentPageBy2", pageNo / 2);
-//		model.addAttribute("currentPagePlusTotalPagesBy2", (pageNo + page.getTotalPages()) / 2);
 		
 		model.addAttribute("projects", projects);
 
@@ -119,8 +116,14 @@ public class ProjectController{
 	
 	@GetMapping("/timelines")
 	public String displayProjectTimelines(Model model) throws JsonProcessingException {
+		return displayPaginatedProjectTimelines(1, model);
+	}
+	
+	@GetMapping("/timelines/pages")
+	public String displayPaginatedProjectTimelines(@RequestParam("timelinesPageNo") int timelinesPageNo, Model model) throws JsonProcessingException {
 		
-		List<ITimelineData> projectTimelines = projectService.displayProjectTimelines();
+		Page<ITimelineData> projectTimelinesPage = projectService.getPaginatedTimelinesData(timelinesPageNo, timelinesPageSize);
+		List<ITimelineData> projectTimelines = projectTimelinesPage.getContent();
 		
 		ObjectMapper objectMapper = new ObjectMapper();
 		String projectTimeLinesJsonString = objectMapper.writeValueAsString(projectTimelines);
@@ -130,7 +133,11 @@ public class ProjectController{
 		
 		model.addAttribute("projectTimeList", projectTimeLinesJsonString);
 		
+		model.addAttribute("currentTimelinesPage", timelinesPageNo);
+		model.addAttribute("totalTimelinePages", projectTimelinesPage.getTotalPages());
+		model.addAttribute("totalTimeLineItems", projectTimelinesPage.getTotalElements());
+		model.addAttribute("totalTimeLineItemsInPage", projectTimelinesPage.getSize());
+		
 		return "projects/project-timelines";
 	}
-	
 }
